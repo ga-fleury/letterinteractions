@@ -2,11 +2,41 @@
 	font-family: 'Days One';
 	font-size: 9vw;
 	font-weight: 400;
-	color: #d5c12e;
+	color: #ffcb00;
 }
 
 .word--kidnap span {
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	background-size: 100%;
+}
+
+span.letter5 {
+    width: 8vw;
+    text-align: center;
+    margin: 0px -2vw;
+}
+
+span.letter3 {
+    width: 12vw;
+    text-align: center;
+    margin: 0px -2vw;
+}
+
+span.letter1 {
+    width: 12vw;
+    text-align: center;
+    margin: 0px -2vw;
+}
+
+span.letter4 {
+    width: 12vw;
+    text-align: center;
+    margin: 0px -2vw;
+}
+
+
+.word--kidnap span:hover {
+    z-index: 999;
+    height: 20vw;
 }

@@ -19,16 +19,17 @@
 			this.DOM = {};
 			this.DOM.el = el;
 			this.imgs = imgs;
+			console.log(`thisdomel: ${this.DOM.el}`)
 			this.totalImgs = this.imgs.length;
 			this.options = {
 				// Max and Min values for the time when to start the effect.
 				glitchStart: {min: 500, max: 4000},
 				// Max and Min values of time that an element keeps each state.
-				glitchState: {min: 50, max: 200},
+				glitchState: {min: 150, max: 400},
 				// Number of times the glitch action is performed per iteration.
 				glitchTotalIterations: 6,
 				// The imgs slideshow interval.
-				slideshowInterval: 200
+				slideshowInterval: 400
 			};
 		}
 		glitch() {
@@ -47,7 +48,7 @@
 			return new Promise((resolve, reject) => {
 				if( this.iteration < this.options.glitchTotalIterations ) {
 					this.glitchStateTimeout = setTimeout(() => {
-						this.DOM.el.style.transform = `translate3d(${getRandomInt(-20,20)}px,${getRandomInt(-20,20)}px,0px) rotate3d(0,0,1,${getRandomInt(-3,3)}deg)`;
+						this.DOM.el.style.transform = `translate3d(${getRandomInt(-0,0)}px,${getRandomInt(-0,0)}px,0px) rotate3d(0,0,1,${getRandomInt(-0,0)}deg)`;
 						if( getRandomInt(0,3) < 2 ) {
 							this.DOM.el.style.backgroundImage = `url(${this.imgs[getRandomInt(0,this.totalImgs-1)]})`;
 							this.DOM.el.style.color = 'transparent';
@@ -106,9 +107,10 @@
 		constructor(letter,pos) {
 			this.DOM = {};
 			this.DOM.letter = letter;
+			console.log(this.DOM.letter)
 			this.pos = pos;
 			this.imgs = letter.parentNode.dataset[`imagesChar-${this.pos+1}`].split(',');
-			this.imgs.push(letter.parentNode.dataset['imageDeath']);
+			this.imgs.push(letter.parentNode.dataset['brazilFlag']);
 			let htmlstr = '';
 			for(const img of this.imgs) {
 				htmlstr += `<img src="${img}"/>`;
@@ -118,6 +120,7 @@
 			imgWrapper.innerHTML = htmlstr;
 			document.body.appendChild(imgWrapper);
 			this.bgcolor = letter.parentNode.dataset['backgroundColors'].split(',')[this.pos];
+			this.bgimage = letter.parentNode.dataset['backgroundImages'].split(',')[this.pos];
 			this.gfx = new GlitchFx(this.DOM.letter, this.imgs);
 			this.gfx.glitch();
 			this.initEvents();
@@ -126,11 +129,15 @@
 			this.mouseenterFn = () => {
 				this.gfx.stop().slideshow();
 				document.body.style.backgroundColor = this.bgcolor;	
+				document.body.style.backgroundImage = `url(${this.bgimage})`;	
+				document.querySelector('.word--kidnap').style = `color: ${this.bgcolor}`
 			};
 			this.mouseleaveFn = () => {
 				this.gfx.stopSlideshow();
 				this.gfx.glitch();
 				document.body.style.backgroundColor = '#191a19';
+				let randomInt = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+				document.body.style.backgroundImage = `url(img/modelocol${randomInt}.png)`;	
 			};
 			this.DOM.letter.addEventListener('mouseenter', this.mouseenterFn);
 			this.DOM.letter.addEventListener('mouseleave', this.mouseleaveFn);
